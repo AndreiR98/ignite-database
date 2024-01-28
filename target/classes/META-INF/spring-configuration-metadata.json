@@ -1,0 +1,22 @@
+{
+  "groups": [
+    {
+      "name": "roteala.blockchain",
+      "type": "uk.co.roteala.configs.BlockchainConfigs",
+      "sourceType": "uk.co.roteala.configs.BlockchainConfigs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "roteala.blockchain.node-server-i-p",
+      "type": "java.lang.String",
+      "sourceType": "uk.co.roteala.configs.BlockchainConfigs"
+    },
+    {
+      "name": "roteala.blockchain.root-directory",
+      "type": "java.io.File",
+      "sourceType": "uk.co.roteala.configs.BlockchainConfigs"
+    }
+  ],
+  "hints": []
+}

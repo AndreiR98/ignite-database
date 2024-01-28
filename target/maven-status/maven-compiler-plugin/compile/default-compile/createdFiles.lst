@@ -1,0 +1,4 @@
+META-INF/spring-configuration-metadata.json
+uk/co/roteala/BlockchainIgniteApp.class
+uk/co/roteala/configs/IgniteServerConfig.class
+uk/co/roteala/configs/BlockchainConfigs.class
