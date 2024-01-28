@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: blockchain-ignite-service
+spec:
+  selector:
+    app: blockchain-ignite-node
+  ports:
+    - name: tpc
+      port: 7331
+      targetPort: 7331
+      protocol: TCP
+    - name: api
+      port: 2020
+      targetPort: 2020
+  type: LoadBalancer
