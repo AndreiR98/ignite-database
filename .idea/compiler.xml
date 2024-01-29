@@ -6,13 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="blockchain-ignite" />
+        <module name="ignite-server" />
+        <module name="ignite-client" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="blockchain-ignite" options="-parameters" />
+      <module name="ignite-client" options="-parameters" />
+      <module name="ignite-database" options="" />
+      <module name="ignite-server" options="-parameters" />
     </option>
   </component>
 </project>

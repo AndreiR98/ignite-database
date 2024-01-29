@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ignite-server
+spec:
+  serviceName: ignite-server
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ignite-server
+  template:
+    metadata:
+      labels:
+        app: ignite-server
+    spec:
+      containers:
+        - name: ignite-server
+          image: ignite-server
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 7331
+          env:
+            - name: POD_ORDINAL_INDEX
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['statefulset.kubernetes.io/pod-name']
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          volumeMounts:
+            - mountPath: /root/roteala
+              subPath: ignite-server-${POD_ORDINAL_INDEX}
+              name: ignite-server-storage
+      volumes:
+        - name: ignite-server-storage
+          persistentVolumeClaim:
+            claimName: ignite-server-storage
+  volumeClaimTemplates:
+    - metadata:
+        name: ignite-server-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi

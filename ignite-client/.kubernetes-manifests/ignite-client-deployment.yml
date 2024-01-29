@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: blockchain-ignite-node
+spec:
+  serviceName: ignite-client
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ignite-client
+  template:
+    metadata:
+      labels:
+        app: ignite-client
+    spec:
+      containers:
+        - name: ignite-client
+          image: ignite-client
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 7331
+          env:
+            - name: POD_ORDINAL_INDEX
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.annotations['statefulset.kubernetes.io/pod-name']
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          volumeMounts:
+            - mountPath: /root/roteala
+              subPath: ignite-client-${POD_ORDINAL_INDEX}
+              name: ignite-client-storage
+      volumes:
+        - name: ignite-client-storage
+          persistentVolumeClaim:
+            claimName: ignite-client-storage
+  volumeClaimTemplates:
+    - metadata:
+        name: ignite-client-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
