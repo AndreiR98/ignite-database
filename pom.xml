@@ -49,26 +49,8 @@
         </dependency>
     </dependencies>
 
-    <modules>
-        <module>ignite-commons</module>
-        <module>ignite-server</module>
-        <module>ignite-client</module>
-    </modules>
-
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
@@ -110,66 +92,42 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.asciidoctor</groupId>
-                    <artifactId>asciidoctor-maven-plugin</artifactId>
-                    <version>1.5.8</version>
-                    <executions>
-                        <execution>
-                            <id>generate-docs</id>
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>process-asciidoc</goal>
-                            </goals>
-                            <configuration>
-                                <backend>html</backend>
-                                <doctype>book</doctype>
-                            </configuration>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.springframework.restdocs</groupId>
-                            <artifactId>spring-restdocs-asciidoctor</artifactId>
-                            <version>${spring-restdocs.version}</version>
-                        </dependency>
-                    </dependencies>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <configuration>
+                        <from>
+                            <image>openjdk:17-oracle</image>
+                            <platforms>
+                                <platform>
+                                    <architecture>amd64</architecture>
+                                    <os>linux</os>
+                                </platform>
+                                <platform>
+                                    <architecture>arm64</architecture>
+                                    <os>linux</os>
+                                </platform>
+                            </platforms>
+                        </from>
+                        <to>
+                            <image>${dockerRepository}/${project.artifactId}:${project.version}</image>
+                        </to>
+                        <container>
+                            <jvmFlags>
+                                <jvmFlag>--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED</jvmFlag>
+                                <jvmFlag>--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED</jvmFlag>
+                                <jvmFlag>--add-opens=java.base/sun.nio.ch=ALL-UNNAMED</jvmFlag>
+                                <jvmFlag>--add-opens=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED</jvmFlag>
+                                <jvmFlag>--add-opens=jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED</jvmFlag>
+                                <jvmFlag>--add-opens=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED</jvmFlag>
+                                <jvmFlag>--add-opens=java.base/java.io=ALL-UNNAMED</jvmFlag>
+                                <jvmFlag>--add-opens=java.base/java.nio=ALL-UNNAMED</jvmFlag>
+                                <jvmFlag>--add-opens=java.base/java.util=ALL-UNNAMED</jvmFlag>
+                                <jvmFlag>--add-opens=java.base/java.lang=ALL-UNNAMED</jvmFlag>
+                            </jvmFlags>
+                        </container>
+                    </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>build-info</id>
-                            <goals>
-                                <goal>build-info</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-<!--                <plugin>-->
-<!--                    <groupId>com.google.cloud.tools</groupId>-->
-<!--                    <artifactId>jib-maven-plugin</artifactId>-->
-<!--                    <version>3.2.0</version>-->
-<!--                    <configuration>-->
-<!--                        <from>-->
-<!--                            <image>openjdk:17-jre-slim</image>-->
-<!--                            <platforms>-->
-<!--                                <platform>-->
-<!--                                    <architecture>amd64</architecture>-->
-<!--                                    <os>linux</os>-->
-<!--                                </platform>-->
-<!--                                <platform>-->
-<!--                                    <architecture>arm64</architecture>-->
-<!--                                    <os>linux</os>-->
-<!--                                </platform>-->
-<!--                            </platforms>-->
-<!--                        </from>-->
-<!--                        <to>-->
-<!--                            <image>${dockerRepository}/${project.artifactId}:${project.version}</image>-->
-<!--                        </to>-->
-<!--                    </configuration>-->
-<!--                </plugin>-->
-
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
@@ -241,4 +199,10 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <modules>
+        <module>ignite-commons</module>
+        <module>ignite-server</module>
+        <module>ignite-client</module>
+    </modules>
 </project>

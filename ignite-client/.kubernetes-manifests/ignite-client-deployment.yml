@@ -29,7 +29,7 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
           volumeMounts:
-            - mountPath: /root/roteala
+            - mountPath: /roteala/ignite/client
               subPath: ignite-client-${POD_ORDINAL_INDEX}
               name: ignite-client-storage
       volumes:
