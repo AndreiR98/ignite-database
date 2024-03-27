@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: akhq-config
+data:
+  application.yml: |
+    akhq:
+      connections:
+        kafka-cluster:
+          properties:
+            bootstrap.servers: "broker:9092"
+      # Configure security for anonymous access
+      security:
+        # Define a default group for anonymous users
+        default-group: all-access
+        # Define the all-access group with full permissions
+        groups:
+          all-access:
+            roles:
+              - topic/read
+              - topic/insert
+              - topic/delete
+              - topic/config/update
+              - node/read
+              - node/config/update
+              - topic/data/read
+              - topic/data/insert
+              - topic/data/delete
+              - group/read
+              - group/delete
+              - group/offsets/update
+              - registry/read
+              - registry/insert
+              - registry/update
+              - registry/delete
+              - registry/version/delete
+              - acls/read
+              - connect/read
+              - connect/insert
+              - connect/update
+              - connect/delete
+              - connect/state/update
